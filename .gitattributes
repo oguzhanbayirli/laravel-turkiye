@@ -8,3 +8,6 @@
 /phpunit.xml.dist   export-ignore
 /phpstan.neon.dist  export-ignore
 /CONTRIBUTING.md    export-ignore
+
+# Keep TCMB responses byte for byte (they come with CRLF line endings).
+/tests/Fixtures/* -text
