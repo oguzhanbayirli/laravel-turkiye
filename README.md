@@ -3,7 +3,9 @@
 Validation rules for Turkish identity numbers (TCKN), tax numbers (VKN) and
 IBANs, amounts written out in Turkish words for invoices, and a client for the
 daily exchange rates published by the Central Bank of the Republic of Türkiye
-(TCMB). Works with Laravel 11, 12 and 13 on PHP 8.2 and later.
+(TCMB). Works with Laravel 12 and 13 on PHP 8.2 and later. Laravel 11 is left out
+because it no longer gets security fixes and Composer refuses to install it by
+default.
 
 [Türkçe README](README.tr.md)
 

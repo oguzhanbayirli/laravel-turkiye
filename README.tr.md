@@ -2,7 +2,9 @@
 
 Laravel için T.C. kimlik no (TCKN), vergi kimlik no (VKN) ve IBAN doğrulama
 kuralları, faturalar için tutarı yazıya çevirme ve TCMB'nin günlük döviz
-kurları. Laravel 11, 12 ve 13 ile, PHP 8.2 ve üstünde çalışır.
+kurları. Laravel 12 ve 13 ile, PHP 8.2 ve üstünde çalışır. Laravel 11 artık güvenlik
+güncellemesi almadığı ve Composer onu varsayılan olarak kurmadığı için
+desteklenmiyor.
 
 [English README](README.md)
 

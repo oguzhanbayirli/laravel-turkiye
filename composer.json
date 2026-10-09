@@ -32,16 +32,16 @@
         "ext-mbstring": "*",
         "ext-simplexml": "*",
         "guzzlehttp/guzzle": "^7.8",
-        "illuminate/cache": "^11.0|^12.0|^13.0",
-        "illuminate/contracts": "^11.0|^12.0|^13.0",
-        "illuminate/http": "^11.0|^12.0|^13.0",
-        "illuminate/support": "^11.0|^12.0|^13.0",
-        "illuminate/translation": "^11.0|^12.0|^13.0",
-        "illuminate/validation": "^11.0|^12.0|^13.0"
+        "illuminate/cache": "^12.0|^13.0",
+        "illuminate/contracts": "^12.0|^13.0",
+        "illuminate/http": "^12.0|^13.0",
+        "illuminate/support": "^12.0|^13.0",
+        "illuminate/translation": "^12.0|^13.0",
+        "illuminate/validation": "^12.0|^13.0"
     },
     "require-dev": {
         "larastan/larastan": "^3.0",
-        "orchestra/testbench": "^9.0|^10.0|^11.0",
+        "orchestra/testbench": "^10.0|^11.0",
         "pestphp/pest": "^3.8|^4.0"
     },
     "autoload": {
