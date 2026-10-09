@@ -3,7 +3,7 @@
 Validation rules for Turkish identity numbers (TCKN), tax numbers (VKN) and
 IBANs, amounts written out in Turkish words for invoices, and a client for the
 daily exchange rates published by the Central Bank of the Republic of Türkiye
-(TCMB). Works with Laravel 12 and 13 on PHP 8.2 and later. Laravel 11 is left out
+(TCMB). Works with Laravel 12 on PHP 8.2+ and Laravel 13 on PHP 8.3+. Laravel 11 is left out
 because it no longer gets security fixes and Composer refuses to install it by
 default.
 
@@ -12,8 +12,10 @@ default.
 ## Why another package
 
 For years `epigra/tckimlik` was the usual way to check a TCKN in Laravel. It is
-archived now, and the NVI web service that could confirm a number against the
-population register stopped answering on 30 September 2025. The offline check
+archived now. According to the NVI notice quoted in its README, NVI's free
+public verification service (KPSPublic) was scheduled to close on 30 September
+2025; checking a number against the population register now requires KPS
+membership. The offline check
 is still what most forms need, so this package does that, along with the other
 small Turkey-specific chores that keep coming up in invoicing code: VKN and
 IBAN checks, "Yalnız ... TL" lines and TCMB rates. Every part also works as a
@@ -57,7 +59,7 @@ $request->validate([
 Messages ship in Turkish and English and follow the app locale:
 
 ```
-national_id geçerli bir T.C. kimlik numarası olmalıdır.
+national id geçerli bir T.C. kimlik numarası olmalıdır.
 The iban field must be a valid Turkish IBAN.
 ```
 
@@ -109,8 +111,10 @@ AmountInWords::convert('1234.56', WordsFormat::invoiceUpper());
 // YALNIZ: BİN İKİ YÜZ OTUZ DÖRT TÜRK LİRASI ELLİ ALTI KURUŞ
 ```
 
-Numbers follow TDK spelling: words are separate, "bin" never becomes "bir
-bin", and "yüz" never becomes "bir yüz". Upper case uses the dotted capital İ.
+Numbers follow TDK spelling: "bin" never becomes "bir bin" and "yüz" never
+becomes "bir yüz". Plain text keeps the words apart; the invoice preset joins
+them, as TDK prescribes for amounts on commercial documents. Capitalisation
+follows common invoice practice, with the dotted capital İ.
 
 Presets can be adjusted:
 
@@ -183,9 +187,9 @@ Configuration, after publishing `config/turkiye.php`:
 ```php
 'tcmb' => [
     'base_url' => env('TCMB_BASE_URL', 'https://www.tcmb.gov.tr/kurlar'),
-    'timeout' => 10,
-    'connect_timeout' => 5,
-    'retries' => 1,              // only for connection errors
+    'timeout' => (int) env('TCMB_TIMEOUT', 10),
+    'connect_timeout' => (int) env('TCMB_CONNECT_TIMEOUT', 5),
+    'retries' => (int) env('TCMB_RETRIES', 1), // only for connection errors
     'max_lookback_days' => 10,
     'cache' => [
         'store' => env('TCMB_CACHE_STORE'), // null = default store

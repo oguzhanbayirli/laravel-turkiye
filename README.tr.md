@@ -2,7 +2,7 @@
 
 Laravel için T.C. kimlik no (TCKN), vergi kimlik no (VKN) ve IBAN doğrulama
 kuralları, faturalar için tutarı yazıya çevirme ve TCMB'nin günlük döviz
-kurları. Laravel 12 ve 13 ile, PHP 8.2 ve üstünde çalışır. Laravel 11 artık güvenlik
+kurları. Laravel 12 ile PHP 8.2+, Laravel 13 ile PHP 8.3+ üzerinde çalışır. Laravel 11 artık güvenlik
 güncellemesi almadığı ve Composer onu varsayılan olarak kurmadığı için
 desteklenmiyor.
 
@@ -11,8 +11,9 @@ desteklenmiyor.
 ## Neden
 
 Laravel'de TCKN kontrolü için uzun süre `epigra/tckimlik` kullanıldı. Paket
-artık arşivde; numarayı nüfus kaydıyla karşılaştıran NVI web servisi de
-30 Eylül 2025'te kapandı. Formların çoğunun ihtiyacı zaten çevrim dışı
+artık arşivde. Paketin README'sinde aktarılan NVI duyurusuna göre NVI'nin
+herkese açık doğrulama servisi (KPSPublic) 30 Eylül 2025'te kapatılacaktı;
+numarayı nüfus kaydıyla karşılaştırmak artık KPS üyeliği istiyor. Formların çoğunun ihtiyacı zaten çevrim dışı
 algoritma kontrolü. Bu paket onu yapıyor, yanında fatura kodunda sürekli
 yeniden yazılan birkaç işi de topluyor: VKN ve IBAN kontrolü, "Yalnız ... TL"
 satırı, TCMB kurları. Hepsi Laravel dışında düz PHP sınıfı olarak da
@@ -101,8 +102,10 @@ AmountInWords::convert('1234.56', WordsFormat::invoiceUpper());
 // YALNIZ: BİN İKİ YÜZ OTUZ DÖRT TÜRK LİRASI ELLİ ALTI KURUŞ
 ```
 
-Yazım TDK'ya uyar: sayılar ayrı yazılır, "bir bin" ve "bir yüz" denmez, büyük
-harfte noktalı İ kullanılır.
+Yazım TDK'ya uyar: "bir bin" ve "bir yüz" denmez. Düz metinde sözcükler ayrı
+yazılır; fatura biçimi, TDK'nın ticari belgelerdeki tutarlar için öngördüğü gibi
+bitişik yazar. Büyük harf kullanımı yaygın fatura alışkanlığına uyar, noktalı
+İ kullanılır.
 
 Biçimler değiştirilebilir:
 
@@ -143,7 +146,7 @@ $bulten->get('USD')->forexSelling;  // 49.2152
 Tcmb::on('2026-10-04')->date;       // pazar, bu yüzden 2026-10-02 (cuma)
 
 $yen = Tcmb::rate('JPY');
-$yen->unit;                         // 100, TCMB yeni 100'lük birimle verir
+$yen->unit;                         // 100, TCMB Japon yenini 100'lük birimle verir
 $yen->perUnit();                    // 1 yen
 $yen->toLira(25000, RateType::ForexBuying);
 ```
